@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="index.css">
+    <title>Hello, world!</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="">
+            <a class="navbar-brand" href="#"><img width='137px'
+                    src="https://www.esyon.de/wp-content/uploads/2016/11/Amazon-Logo-wei%C3%9F.png" alt="logo"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+        </div>
+        <div class="collapse navbar-collapse ml-auto" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="index.html">Home </a>
+                <a class="nav-item nav-link" href="backoffice.html">Backoffice</a>
+
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid main">
+        <div class="row justify-content-center">
+            <!-- <div class="card" style="width: 18rem;">
+                    <img src="https://picsum.photos/200" class="card-img-top p-3" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Name</h5>
+                        <p class="card-text">Discribtion</p>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span class="badge badge-secondary ml-3">Apple</span>
+                        <span class="badge badge-primary mr-3">price€</span>
+                    </div>
+                </div> -->
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script>
+
+        window.onload = async () => {
+            const productRow = document.querySelector('.main .row')
+
+            const response = await fetch('https://striveschool-api.herokuapp.com/api/product/', {
+                headers: {
+                    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlM2M4NWNlYWY0ODAwMTVjOTE4NjgiLCJpYXQiOjE2MjUwNTQyNTUsImV4cCI6MTYyNjI2Mzg1NX0.rXj_QkhfHQmdblgV2a-bcEH3jONVjjEWhonOkCeCPBw"
+                }
+            })
+            const products = await response.json()
+            console.log(products);
+            products.forEach(product => {
+                productRow.innerHTML += `   
+                <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 m-3">             
+                    <div class="card m-3" style="width: 18rem;">
+                        <div class="card-body">
+                            <div class='d-flex justify-content-between'>
+                                <h5 class="card-title">${product.name}</h5>
+                                <span class="badge badge-secondary text-center ml-3">${product.brand}</span>
+                            </div>
+                            <img src="${product.imageUrl}" class="card-img-top p-3" alt="...">
+                            <p class="card-text">${product.description}</p>
+                            <span class="badge badge-primary mr-3">${product.price}€</span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                        </div>
+                    </div>
+                </div>
+                `
+            })
+        }
+
+    </script>
+</body>
+
+</html>
