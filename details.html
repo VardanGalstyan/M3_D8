@@ -45,7 +45,7 @@
     </nav>
     <div class="container main m-5">
         <div class="row justify-content-center">
-            <div class="col-md-6 col-lg-8 d-flex">
+            <!-- <div class="col-md-6 col-lg-8 d-flex">
                 <div class="bg-dark">
                     <img class="p-3" src="https://picsum.photos/200" alt="">
                 </div>
@@ -57,7 +57,7 @@
                     <li class="list-group-item">And a fifth one</li>
                 </ul>
                 <button class="btn btn-success">Edit Item</button>
-            </div>
+            </div> -->
         </div>
     </div>
 
@@ -91,7 +91,7 @@
             RowContainer.innerHTML = `
             <div class="col-md-6 col-lg-8 d-flex">
                 <div class="bg-dark">
-                    <img class="p-3" src="${items.imageUrl}" alt="">
+                    <img class="p-3 " style="width: 18rem;" src="${items.imageUrl}" alt="">
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item"><strong>Name:</strong> ${items.name}</li>
@@ -101,14 +101,14 @@
                     <li class="list-group-item"><strong>CreatedAt:</strong> ${items.createdAt}</li>
                     <li class="list-group-item"><strong>UpdatedAt:</strong> ${items.updatedAt}</li>
                 </ul>
-                <button onclick='handleEdit()' class="btn btn-success" >Edit Item</button>
+                <a href='./backoffice.html?id=${urlId}'><button onclick='handleEdit()' class="btn btn-success" >Edit Item</button></a>
             </div>
             `
         }
 
-        const handleEdit = () => {
-            window.location.assign('./backoffice.html?id=' + urlId)
-        }
+        // const handleEdit = () => {
+        //     window.location.assign('./backoffice.html?id=' + urlId)
+        // }
 
 
 

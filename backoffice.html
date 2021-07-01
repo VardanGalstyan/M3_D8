@@ -36,6 +36,9 @@
         <div class="row justify-content-center">
             <div class="col-md-6 form">
                 <h2 class="mt-5 mb-3">Backoffice</h2>
+                <div id="alert" class="alert alert-success d-none" role="alert">
+                    A simple success alert—check it out!
+                </div>
                 <form onsubmit="handleSubmit(event)">
                     <div class="form-group">
                         <label for="name">Item name</label>
@@ -60,7 +63,7 @@
                     </div>
                     <div class="d-flex justify-content-between">
                         <input type="submit" class="btn btn-primary" value="Submit" />
-                        <button id="deleteButton" class='btn btn-danger d-none' type="button">Button</button>
+                        <button id="deleteButton" class='btn btn-danger d-none' type="button" onclick="deleteEvent()">Delete</button>
                     </div>
                 </form>
 
@@ -107,6 +110,10 @@
                 document.querySelector('#image').value = data.imageUrl
                 document.querySelector('#price').value = data.price
 
+
+
+
+
             }
         }
 
@@ -138,8 +145,8 @@
                 if (response.ok) {
                     const payloadResponse = await response.json()
                     console.log(payloadResponse);
-                    alert(`Successful Operation  
-                    ID# ${payloadResponse._id}`)
+                    // responseAlert('success', `Successful Operation  
+                    // ID# ${payloadResponse._id}`)
 
                     const payload = {
                         name: document.querySelector('#name').value = '',
@@ -162,16 +169,26 @@
         }
 
         const deleteEvent = () => {
-            const respone = fetch(endpoint, {
+
+            const response = fetch(endpoint, {
                 method: 'DELETE',
                 headers: {
                     "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlM2M4NWNlYWY0ODAwMTVjOTE4NjgiLCJpYXQiOjE2MjUwNTQyNTUsImV4cCI6MTYyNjI2Mzg1NX0.rXj_QkhfHQmdblgV2a-bcEH3jONVjjEWhonOkCeCPBw",
                     "Content-Type": "application/json",
                 }
             })
+            // if(response.ok){
+            //     responseAlert("success", 'Nicely Deleted')
+            // } else [
+            //     responseAlert('danger', 'Ooops')
+            // ]
         }
 
-
+        const responseAlert = (type, text) => {
+            `<div class="alert alert-${type}" role="alert">
+                ${text}
+            </div>`
+        }
 
 
     </script>
