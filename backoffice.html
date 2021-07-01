@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="index.css">
-    <title>Hello, world!</title>
+    <title>M3_D9</title>
 </head>
 
 <body>
@@ -39,11 +39,12 @@
                 <form onsubmit="handleSubmit(event)">
                     <div class="form-group">
                         <label for="name">Item name</label>
-                        <input id="name" type="text" class="form-control" aria-describedby="name"/>
+                        <input id="name" type="text" class="form-control" aria-describedby="name" />
                     </div>
                     <div class="form-group">
                         <label for="description">Item description</label>
-                        <textarea id="description" type="text" rows="6" class="form-control" aria-describedby="item description"></textarea>
+                        <textarea id="description" type="text" rows="6" class="form-control"
+                            aria-describedby="item description"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="brand">Item Brand</label>
@@ -57,8 +58,12 @@
                         <label for="price">Item price</label>
                         <input id="price" type="number" class="form-control" aria-describedby="ticket price" />
                     </div>
-                    <input type="submit" class="btn btn-primary" value="Submit" />
+                    <div class="d-flex justify-content-between">
+                        <input type="submit" class="btn btn-primary" value="Submit" />
+                        <button id="deleteButton" class='btn btn-danger d-none' type="button">Button</button>
+                    </div>
                 </form>
+
             </div>
         </div>
 
@@ -78,24 +83,51 @@
         crossorigin="anonymous"></script>
     <script>
 
-        const handleSubmit  = async (event) => {
+        const urlId = new URLSearchParams(window.location.search).get('id')
+        const endpoint = urlId ? 'https://striveschool-api.herokuapp.com/api/product/' + urlId : 'https://striveschool-api.herokuapp.com/api/product/'
+        const method = urlId ? 'PUT' : 'POST'
+
+
+        window.onload = async () => {
+            if (urlId) {
+                const response = await fetch(endpoint, {
+                    headers: {
+                        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlM2M4NWNlYWY0ODAwMTVjOTE4NjgiLCJpYXQiOjE2MjUwNTQyNTUsImV4cCI6MTYyNjI2Mzg1NX0.rXj_QkhfHQmdblgV2a-bcEH3jONVjjEWhonOkCeCPBw"
+                    }
+                })
+                const data = await response.json()
+                console.log(data);
+
+                const showDeleteButton = document.querySelector('#deleteButton')
+                showDeleteButton.classList.remove('d-none')
+
+                document.querySelector('#name').value = data.name
+                document.querySelector('#description').value = data.description
+                document.querySelector('#brand').value = data.brand
+                document.querySelector('#image').value = data.imageUrl
+                document.querySelector('#price').value = data.price
+
+            }
+        }
+
+        const handleSubmit = async (event) => {
             const url = 'https://striveschool-api.herokuapp.com/api/product/'
             event.preventDefault()
             console.log(url);
 
             const payload = {
-                name : document.querySelector('#name').value,
-                description : document.querySelector('#description').value,
-                brand : document.querySelector('#brand').value,
-                imageUrl : document.querySelector('#image').value,
-                price : document.querySelector('#price').value,
-        
+                name: document.querySelector('#name').value,
+                description: document.querySelector('#description').value,
+                brand: document.querySelector('#brand').value,
+                imageUrl: document.querySelector('#image').value,
+                price: document.querySelector('#price').value,
+
             }
 
             try {
-                
-                const response = await fetch(url, {
-                    method: 'POST',
+
+                const response = await fetch(endpoint, {
+                    method,
                     body: JSON.stringify(payload),
                     headers: {
                         "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlM2M4NWNlYWY0ODAwMTVjOTE4NjgiLCJpYXQiOjE2MjUwNTQyNTUsImV4cCI6MTYyNjI2Mzg1NX0.rXj_QkhfHQmdblgV2a-bcEH3jONVjjEWhonOkCeCPBw",
@@ -103,11 +135,21 @@
                     }
                 })
 
-                if(response.ok){
+                if (response.ok) {
                     const payloadResponse = await response.json()
                     console.log(payloadResponse);
                     alert(`Successful Operation  
                     ID# ${payloadResponse._id}`)
+
+                    const payload = {
+                        name: document.querySelector('#name').value = '',
+                        description: document.querySelector('#description').value = '',
+                        brand: document.querySelector('#brand').value = '',
+                        imageUrl: document.querySelector('#image').value = '',
+                        price: document.querySelector('#price').value = '',
+
+                    }
+
                 } else {
                     alert(`Eroor`)
                 }
@@ -119,9 +161,19 @@
 
         }
 
+        const deleteEvent = () => {
+            const respone = fetch(endpoint, {
+                method: 'DELETE',
+                headers: {
+                    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlM2M4NWNlYWY0ODAwMTVjOTE4NjgiLCJpYXQiOjE2MjUwNTQyNTUsImV4cCI6MTYyNjI2Mzg1NX0.rXj_QkhfHQmdblgV2a-bcEH3jONVjjEWhonOkCeCPBw",
+                    "Content-Type": "application/json",
+                }
+            })
+        }
 
-       
-     
+
+
+
     </script>
 </body>
 

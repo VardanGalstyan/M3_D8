@@ -44,6 +44,7 @@ body::after {
 .main .card {
     z-index: 2;
     border: none;
+    min-width: 15rem;
 }
 .main .card:hover {
     z-index: 2;
